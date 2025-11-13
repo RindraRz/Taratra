@@ -1,4 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.ObjectModel;
 using Taratra.Models;
 
@@ -6,15 +9,31 @@ namespace Taratra.ViewModels
 {
     public partial class ElevesViewModel : ObservableObject
     {
-        public ObservableCollection<Eleve> Eleves { get; set; }
+      
+
+        [ObservableProperty]
+        private ObservableCollection<Eleve> eleves;
 
         public ElevesViewModel()
         {
-            Eleves = new ObservableCollection<Eleve>
-            {
-                new Eleve { Nom="RAZAFINDRAKOTO", Prenom="Rindraniaina", Classe="Terminale D" },
-                new Eleve { Nom="RANDRIAMAMPIONONA", Prenom="Miora", Classe="Première C" }
-            };
+            ChargerEleves();
+        }
+
+        [RelayCommand]
+        public void ChargerEleves()
+        {
+            using var db = new TaratraDbContext();
+            var data = db.Eleves.AsNoTracking().OrderBy(e => e.Nom).ToList();
+            Eleves = new ObservableCollection<Eleve>(data);
+        }
+
+        [RelayCommand]
+        public void AjouterEleve()
+        {
+            using var db = new TaratraDbContext();
+            db.Eleves.Add(new Eleve { Matricule = "AUTO", Nom = "Nouveau", Prenom = "Test", Sexe = 'M' });
+            db.SaveChanges();
+            ChargerEleves();
         }
     }
 }

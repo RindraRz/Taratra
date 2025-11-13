@@ -7,7 +7,34 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="20">
-        <TextBlock Text="Liste des Élèves" FontSize="20" Foreground="White"/>
-        <DataGrid ItemsSource="{Binding Eleves}" Margin="0,40,0,0"/>
+        <StackPanel>
+            <TextBlock Text="Liste des élèves"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Margin="0 0 0 10"/>
+
+            <DataGrid ItemsSource="{Binding Eleves}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      Height="300">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Matricule" Binding="{Binding Matricule}" Width="120"/>
+                    <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="150"/>
+                    <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" Width="150"/>
+                    <DataGridTextColumn Header="Sexe" Binding="{Binding Sexe}" Width="80" />
+                    <DataGridTextColumn Header="Nom complet" Binding="{Binding NomComplet}" Width="200"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <Button Content="Rafraîchir"
+                        Command="{Binding ChargerElevesCommand}"
+                        Width="120" Margin="0 0 10 0"/>
+                <Button Content="Ajouter élève"
+                        Command="{Binding AjouterEleveCommand}"
+                        Width="150"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

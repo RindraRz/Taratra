@@ -17,8 +17,10 @@ namespace Taratra.Models
         public TaratraDbContext()
         {
             // Base SQLite stockée localement
-            var folder = Directory.GetCurrentDirectory();
+            var projectFolder = AppDomain.CurrentDomain.BaseDirectory;
+            var folder = Path.GetFullPath(Path.Combine(projectFolder, @"..\..\..\"));
             DbPath = Path.Combine(folder, "database.db");
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
