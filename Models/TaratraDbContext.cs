@@ -8,9 +8,23 @@ using System.Threading.Tasks;
 
 namespace Taratra.Models
 {
-    class TaratraDbContext: DbContext
+    public class TaratraDbContext: DbContext
     {
         public DbSet<Eleve> Eleves { get; set; }
+        public DbSet<AnneeScolaire> AnneeScolaires { get; set; }
+        public DbSet<Classe> Classes { get; set; }
+        public DbSet<Ecole> Ecoles {  get; set; }
+        public DbSet<Inscription> Inscriptions { get; set; }
+        public DbSet<Matiere> Matieres { get; set; }
+        public DbSet<Note> Notes { get; set; }
+        public DbSet<Periode> Periodes { get; set; }
+        public DbSet<SystemeEvaluation> SystemeEvaluations { get; set; }
+        public DbSet<TypeEvaluation> TypeEvaluations { get; set; }
+
+   
+
+
+
 
         private string DbPath { get; }
 

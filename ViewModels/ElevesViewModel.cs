@@ -14,6 +14,8 @@ namespace Taratra.ViewModels
         [ObservableProperty]
         private ObservableCollection<Eleve> eleves;
 
+
+
         public ElevesViewModel()
         {
             ChargerEleves();
@@ -24,6 +26,7 @@ namespace Taratra.ViewModels
         {
             using var db = new TaratraDbContext();
             var data = db.Eleves.AsNoTracking().OrderBy(e => e.Nom).ToList();
+        
             Eleves = new ObservableCollection<Eleve>(data);
         }
 
