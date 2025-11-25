@@ -12,10 +12,11 @@ namespace Taratra.Models
         public int PeriodNumber { get; set; } = 3;
         public string PeriodLibelle { get; set; } = "Trimestre";
 
-    
+        public required string ProviseurName { get; set; }
 
+        public required string EcoleName {  get; set; }
 
-
+        public required string EcoleAdresse { get; set; }
 
 
 

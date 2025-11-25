@@ -13,6 +13,9 @@ namespace Taratra.Models
 
         public string? Adresse { get; set; }
 
+        [Required]
+        public string? ProviseurName {  get; set; }
+
         public ICollection<Classe>? Classes { get; set; }
     }
 

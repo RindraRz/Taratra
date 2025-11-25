@@ -30,8 +30,4 @@
     <Resource Include="Views\icone.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Interfaces\" />
-  </ItemGroup>
-
 </Project>

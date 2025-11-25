@@ -19,6 +19,7 @@
             <Button Content="Élèves" Margin="10" Height="40" Command="{Binding NavigateElevesCommand}"/>
             <Button Content="Bulletins" Margin="10" Height="40" Command="{Binding NavigateBulletinsCommand}"/>
             <Button Content="Notes" Margin="10" Height="40" Command="{Binding NavigateNotesCommand}"/>
+            <Button Content="Classes" Margin="10" Height="40" Command="{Binding NavigateClassesCommand}"/>
         </StackPanel>
 
         <!-- Contenu principal -->

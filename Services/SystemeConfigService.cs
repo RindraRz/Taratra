@@ -8,43 +8,72 @@ using System.Windows.Input;
 using Taratra.Models;
 namespace Taratra.Services
 {
-    public class SystemeConfigService
+    public interface ISystemeConfigService
+    {
+        void SaveSystemeConfig(SystemeConfig sysConfig);
+        List<Periode> CreatePeriode(string libelle, int number);
+        bool IsConfigured();
+    }
+
+    public class SystemeConfigService : ISystemeConfigService
     {
         private readonly TaratraDbContext _dbContext;
-        public SystemeConfigService(TaratraDbContext taratraDbContext)
+
+        public SystemeConfigService(TaratraDbContext dbContext)
         {
-           _dbContext = taratraDbContext;
+            _dbContext = dbContext;
         }
 
         public void SaveSystemeConfig(SystemeConfig sysConfig)
         {
-            foreach (var type_evaluation in sysConfig.Evaluations)
-            {
-                _dbContext.TypeEvaluations.Add(type_evaluation);
-            }
-            List<Periode> periodes = CreatePeriode(sysConfig.PeriodLibelle, sysConfig.PeriodNumber);
-            foreach (var periode in periodes)
-            {
-                _dbContext.Periodes.Add(periode);
-            }
-            _dbContext.SaveChanges();
-            _dbContext.Dispose();
+           
+            if (IsConfigured())
+                return;
 
+            _dbContext.TypeEvaluations.AddRange(sysConfig.Evaluations);
+            var periodes = CreatePeriode(sysConfig.PeriodLibelle, sysConfig.PeriodNumber);
+            _dbContext.Periodes.AddRange(periodes);
+            var Ecole = new Ecole
+            {
+                Nom = sysConfig.EcoleName,
+                Adresse = sysConfig.EcoleAdresse,
+                ProviseurName = sysConfig.ProviseurName
+            };
+            _dbContext.Ecoles.Add(Ecole);
+
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                // TODO : logger l'erreur
+                throw;
+            }
         }
 
-       
 
-        public List<Periode> CreatePeriode(string libelle,int number)
+
+        public List<Periode> CreatePeriode(string libelle, int number)
         {
-       
-            List<Periode> periodes = new List<Periode>();
-            for (int i = 0; i < number; i++) {
-                Periode p = new Periode();
-                p.Ordre = i + 1;
-                p.Libelle = libelle + " "+i+1; 
-                periodes.Add(p);
+            var periodes = new List<Periode>();
+
+            for (int i = 0; i < number; i++)
+            {
+                periodes.Add(new Periode
+                {
+                    Ordre = i + 1,
+                    Libelle = $"{libelle} {i + 1}"
+                });
             }
+
             return periodes;
         }
+        public bool IsConfigured()
+        {
+            return _dbContext.TypeEvaluations.Any() || _dbContext.Periodes.Any();
+        }
+
     }
+
 }

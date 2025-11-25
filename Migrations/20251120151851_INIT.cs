@@ -78,8 +78,7 @@ namespace Taratra.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Libelle = table.Column<string>(type: "TEXT", nullable: false),
-                    Ordre = table.Column<int>(type: "INTEGER", nullable: true),
-                    Actif = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Ordre = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -93,8 +92,7 @@ namespace Taratra.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Nom = table.Column<string>(type: "TEXT", nullable: false),
-                    Ordre = table.Column<int>(type: "INTEGER", nullable: true),
-                    Actif = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Ordre = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

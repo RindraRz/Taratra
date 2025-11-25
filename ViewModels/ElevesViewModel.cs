@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using HandyControl.Controls;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.ObjectModel;
@@ -19,6 +20,7 @@ namespace Taratra.ViewModels
         public ElevesViewModel()
         {
             ChargerEleves();
+          
         }
 
         [RelayCommand]

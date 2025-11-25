@@ -3,6 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using System.Windows.Controls;
 using Taratra.Services;
 using Taratra.Models ;
+using Taratra.Views;
+using Taratra.Views.Pages;
 
 namespace Taratra.ViewModels
 {
@@ -10,30 +12,24 @@ namespace Taratra.ViewModels
     {
         [ObservableProperty]
         private UserControl currentPage;
-        
-        private readonly SystemeConfigService _systemeConfigService;
 
-        public MainViewModel(SystemeConfigService systemeConfigService)
+        private ClassesPage classesPage;
+        
+       
+        public MainViewModel(ClassesPage pageClasse)
         {
-            _systemeConfigService = systemeConfigService;
+           
+            classesPage = pageClasse;
             // Page par défaut
             currentPage = new Views.Pages.ElevesPage();
 
-            List<TypeEvaluation> typeEvaluations = new List<TypeEvaluation>
-            {
-               new TypeEvaluation  { Nom = "Controle 1 " , Ordre=1},
-               new TypeEvaluation  { Nom = "Controle 2 " , Ordre=2},
-               new TypeEvaluation  { Nom = "EXAM" , Ordre=3},
-            };
-            SystemeConfig config = new SystemeConfig { Evaluations = typeEvaluations};
-
-            _systemeConfigService.SaveSystemeConfig(config);
         }
 
         [RelayCommand]
         private void NavigateEleves()
         {
             CurrentPage = new Views.Pages.ElevesPage();
+            
         }
 
         [RelayCommand]
@@ -47,5 +43,11 @@ namespace Taratra.ViewModels
         //{
         //    CurrentPage = new Views.Pages.NotesPage();
         //}
+
+        [RelayCommand]
+        private void NavigateClasses()
+        {
+            CurrentPage = classesPage;
+        }
     }
 }

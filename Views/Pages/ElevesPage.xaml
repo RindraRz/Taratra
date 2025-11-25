@@ -12,6 +12,7 @@
                        FontSize="24"
                        FontWeight="Bold"
                        Margin="0 0 0 10"/>
+            <Button Content="Filtres" Width="120" Click="OpenFilters_Click"/>
 
             <DataGrid ItemsSource="{Binding Eleves}"
                       AutoGenerateColumns="False"
@@ -35,6 +36,24 @@
                         Command="{Binding AjouterEleveCommand}"
                         Width="150"/>
             </StackPanel>
+            <Grid x:Name="FilterModal" Background="#80000000" Visibility="Collapsed">
+                <Border Background="White" Padding="20" CornerRadius="10"
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Width="300">
+                        <TextBlock Text="Appliquer des filtres" FontWeight="Bold" FontSize="16"/>
+
+                        <!-- Exemples de filtres -->
+                        <CheckBox Content="Seulement les filles"/>
+                        <CheckBox Content="Seulement les garçons"/>
+                        <CheckBox Content="Âge > 10 ans"/>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
+                            <Button Content="Annuler" Margin="0 0 10 0" Click="CloseFilters_Click"/>
+                            <Button Content="Appliquer"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
         </StackPanel>
     </Grid>
 </UserControl>

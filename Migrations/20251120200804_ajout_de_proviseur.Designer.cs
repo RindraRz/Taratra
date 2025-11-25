@@ -11,8 +11,8 @@ using Taratra.Models;
 namespace Taratra.Migrations
 {
     [DbContext(typeof(TaratraDbContext))]
-    [Migration("20251120135543_INIT")]
-    partial class INIT
+    [Migration("20251120200804_ajout_de_proviseur")]
+    partial class ajout_de_proviseur
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,6 +71,10 @@ namespace Taratra.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nom")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProviseurName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -197,9 +201,6 @@ namespace Taratra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Actif")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Libelle")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -247,14 +248,11 @@ namespace Taratra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Actif")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Ordre")
+                    b.Property<int>("Ordre")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

@@ -26,5 +26,15 @@ namespace Taratra.Views.Pages
             InitializeComponent();
             DataContext = new ElevesViewModel();
         }
+        private void OpenFilters_Click(object sender, RoutedEventArgs e)
+        {
+            FilterModal.Visibility = Visibility.Visible;
+        }
+
+        private void CloseFilters_Click(object sender, RoutedEventArgs e)
+        {
+            FilterModal.Visibility = Visibility.Collapsed;
+        }
+
     }
 }

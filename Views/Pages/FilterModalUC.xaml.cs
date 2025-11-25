@@ -12,19 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Taratra.ViewModels;
 
 namespace Taratra.Views.Pages
 {
     /// <summary>
-    /// Logique d'interaction pour BulletinPage.xaml
+    /// Logique d'interaction pour FilterModalUC.xaml
     /// </summary>
-    public partial class BulletinPage : UserControl
+    public partial class FilterModalUC : UserControl
     {
-        public BulletinPage()
+        public FilterModalUC()
         {
             InitializeComponent();
-            DataContext = new BulletinPageViewModel();
         }
     }
 }
