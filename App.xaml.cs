@@ -53,6 +53,9 @@ namespace Taratra
             // Services métier
             services.AddScoped<ISystemeConfigService,SystemeConfigService>();
             services.AddScoped<IClasseService, ClasseService>();
+            services.AddScoped<IMatiereService, MatiereService>();
+            services.AddScoped<ISystemeEvaluationService, SystemeEvaluationService>();
+
 
             // services.AddScoped<IEleveService, EleveService>(); // exemple pour interface
 
@@ -62,6 +65,7 @@ namespace Taratra
             services.AddScoped<ClasseViewModel>();
 
             // Windows
+            services.AddScoped<ClasseAddModal>();
             services.AddSingleton<ClassesPage>();
             services.AddSingleton<MainWindow>();
         }

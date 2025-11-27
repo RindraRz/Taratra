@@ -17,16 +17,13 @@ using Taratra.ViewModels;
 namespace Taratra.Views.Pages
 {
     /// <summary>
-    /// Logique d'interaction pour Classes.xaml
+    /// Logique d'interaction pour ClasseAddModal.xaml
     /// </summary>
-    public partial class ClassesPage : UserControl
+    public partial class ClasseAddModal : UserControl
     {
-       
-        public ClassesPage(ClasseViewModel cvm)
+        public ClasseAddModal(ClasseViewModel cvm)
         {
-            
             InitializeComponent();
-
             DataContext = cvm;
         }
     }

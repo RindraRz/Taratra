@@ -37,6 +37,7 @@ namespace Taratra.Services
             if (exist.Any())
                 throw new Exception("Cette classe existe déjà.");
             await _context.Classes.AddAsync(entity);
+            await _context.SaveChangesAsync();
            
         }
 
