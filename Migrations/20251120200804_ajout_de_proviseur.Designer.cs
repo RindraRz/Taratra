@@ -11,8 +11,8 @@ using Taratra.Models;
 namespace Taratra.Migrations
 {
     [DbContext(typeof(TaratraDbContext))]
-    [Migration("20251113105050_Init")]
-    partial class Init
+    [Migration("20251120200804_ajout_de_proviseur")]
+    partial class ajout_de_proviseur
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,7 +38,7 @@ namespace Taratra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AnneeScolaire");
+                    b.ToTable("AnneeScolaires");
                 });
 
             modelBuilder.Entity("Taratra.Models.Classe", b =>
@@ -47,13 +47,40 @@ namespace Taratra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("EcoleId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Classe");
+                    b.HasIndex("EcoleId");
+
+                    b.ToTable("Classes");
+                });
+
+            modelBuilder.Entity("Taratra.Models.Ecole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Adresse")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nom")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProviseurName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ecoles");
                 });
 
             modelBuilder.Entity("Taratra.Models.Eleve", b =>
@@ -113,7 +140,7 @@ namespace Taratra.Migrations
 
                     b.HasIndex("EleveId");
 
-                    b.ToTable("Inscription");
+                    b.ToTable("Inscriptions");
                 });
 
             modelBuilder.Entity("Taratra.Models.Matiere", b =>
@@ -131,7 +158,7 @@ namespace Taratra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Matiere");
+                    b.ToTable("Matieres");
                 });
 
             modelBuilder.Entity("Taratra.Models.Note", b =>
@@ -165,16 +192,13 @@ namespace Taratra.Migrations
 
                     b.HasIndex("SystemeEvaluationId");
 
-                    b.ToTable("Note");
+                    b.ToTable("Notes");
                 });
 
             modelBuilder.Entity("Taratra.Models.Periode", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Actif")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Libelle")
@@ -186,7 +210,7 @@ namespace Taratra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Periode");
+                    b.ToTable("Periodes");
                 });
 
             modelBuilder.Entity("Taratra.Models.SystemeEvaluation", b =>
@@ -215,7 +239,7 @@ namespace Taratra.Migrations
 
                     b.HasIndex("TypeEvaluationId");
 
-                    b.ToTable("SystemeEvaluation");
+                    b.ToTable("SystemeEvaluations");
                 });
 
             modelBuilder.Entity("Taratra.Models.TypeEvaluation", b =>
@@ -224,19 +248,23 @@ namespace Taratra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Actif")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Ordre")
+                    b.Property<int>("Ordre")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TypeEvaluation");
+                    b.ToTable("TypeEvaluations");
+                });
+
+            modelBuilder.Entity("Taratra.Models.Classe", b =>
+                {
+                    b.HasOne("Taratra.Models.Ecole", null)
+                        .WithMany("Classes")
+                        .HasForeignKey("EcoleId");
                 });
 
             modelBuilder.Entity("Taratra.Models.Inscription", b =>
@@ -338,6 +366,11 @@ namespace Taratra.Migrations
                     b.Navigation("Inscriptions");
 
                     b.Navigation("SystemesEvaluations");
+                });
+
+            modelBuilder.Entity("Taratra.Models.Ecole", b =>
+                {
+                    b.Navigation("Classes");
                 });
 
             modelBuilder.Entity("Taratra.Models.Eleve", b =>

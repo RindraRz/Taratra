@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using HandyControl.Controls;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.ObjectModel;
@@ -14,9 +15,12 @@ namespace Taratra.ViewModels
         [ObservableProperty]
         private ObservableCollection<Eleve> eleves;
 
+
+
         public ElevesViewModel()
         {
             ChargerEleves();
+          
         }
 
         [RelayCommand]
@@ -24,6 +28,7 @@ namespace Taratra.ViewModels
         {
             using var db = new TaratraDbContext();
             var data = db.Eleves.AsNoTracking().OrderBy(e => e.Nom).ToList();
+        
             Eleves = new ObservableCollection<Eleve>(data);
         }
 

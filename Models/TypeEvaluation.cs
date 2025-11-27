@@ -10,11 +10,12 @@ namespace Taratra.Models
         public int Id { get; set; }
 
         [Required]
-        public string Nom { get; set; } // DS, Examen...
+        public  string Nom { get; set; } // DS, Examen...
 
-        public int? Ordre { get; set; }
 
-        public bool Actif { get; set; } = true;
+        public  int Ordre { get; set; }
+
+ 
 
         public ICollection<SystemeEvaluation>? SystemesEvaluations { get; set; }
     }

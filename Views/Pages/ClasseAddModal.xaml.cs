@@ -17,14 +17,14 @@ using Taratra.ViewModels;
 namespace Taratra.Views.Pages
 {
     /// <summary>
-    /// Logique d'interaction pour BulletinPage.xaml
+    /// Logique d'interaction pour ClasseAddModal.xaml
     /// </summary>
-    public partial class BulletinPage : UserControl
+    public partial class ClasseAddModal : UserControl
     {
-        public BulletinPage()
+        public ClasseAddModal(ClasseViewModel cvm)
         {
             InitializeComponent();
-            DataContext = new BulletinPageViewModel();
+            DataContext = cvm;
         }
     }
 }

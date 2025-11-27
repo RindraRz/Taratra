@@ -1,0 +1,70 @@
+﻿<UserControl
+    x:Class="Taratra.Views.Pages.FilterModalUC"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:hc="https://handyorg.github.io/handycontrol">
+
+    <Border Background="White"
+            Padding="20"
+            CornerRadius="10"
+            Width="400">
+
+        <StackPanel>
+
+            <TextBlock Text="Filtrer les élèves"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Margin="0 0 0 20"/>
+
+
+            <!-- FILTRE : CLASSE -->
+            <StackPanel Margin="0 0 0 10">
+                <TextBlock Text="Classe" FontWeight="SemiBold" Margin="0 0 0 5"/>
+                <ComboBox 
+              ItemsSource="{Binding Classes}"
+              DisplayMemberPath="Nom"
+              SelectedItem="{Binding SelectedClasse, Mode=TwoWay}"
+              Width="200"/>
+            </StackPanel>
+
+            <!-- FILTRE : SEXE -->
+            <StackPanel Margin="0 0 0 10">
+                <TextBlock Text="Sexe"
+                           FontWeight="SemiBold"
+                           Margin="0 0 0 5"/>
+                <hc:CheckComboBox />
+            </StackPanel>
+
+
+            <!-- FILTRE : AGE -->
+            <StackPanel Margin="0 0 0 10">
+                <TextBlock Text="Âge minimum"
+                           FontWeight="SemiBold"
+                           Margin="0 0 0 5"/>
+                <hc:NumericUpDown Minimum="5"
+                                  Maximum="25"/>
+            </StackPanel>
+
+
+            <!-- BOUTONS -->
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0 20 0 0">
+
+                <Button Content="Annuler"
+        Width="100"
+        Margin="0 0 10 0"
+        Command="{Binding CloseModalCommand}"/>
+
+                <Button Content="Appliquer"
+        Width="100"
+        Command="{Binding ApplyFilterCommand}"/>
+
+
+            </StackPanel>
+
+        </StackPanel>
+
+    </Border>
+
+</UserControl>

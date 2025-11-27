@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Taratra.Models;
 
@@ -10,9 +11,11 @@ using Taratra.Models;
 namespace Taratra.Migrations
 {
     [DbContext(typeof(TaratraDbContext))]
-    partial class TaratraDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251120151851_INIT")]
+    partial class INIT
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -68,10 +71,6 @@ namespace Taratra.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nom")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ProviseurName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

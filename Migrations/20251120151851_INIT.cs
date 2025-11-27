@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Taratra.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class INIT : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AnneeScolaire",
+                name: "AnneeScolaires",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -23,20 +23,21 @@ namespace Taratra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AnneeScolaire", x => x.Id);
+                    table.PrimaryKey("PK_AnneeScolaires", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Classe",
+                name: "Ecoles",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nom = table.Column<string>(type: "TEXT", nullable: false)
+                    Nom = table.Column<string>(type: "TEXT", nullable: false),
+                    Adresse = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Classe", x => x.Id);
+                    table.PrimaryKey("PK_Ecoles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,7 +58,7 @@ namespace Taratra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Matiere",
+                name: "Matieres",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -67,41 +68,58 @@ namespace Taratra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Matiere", x => x.Id);
+                    table.PrimaryKey("PK_Matieres", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Periode",
+                name: "Periodes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Libelle = table.Column<string>(type: "TEXT", nullable: false),
-                    Ordre = table.Column<int>(type: "INTEGER", nullable: true),
-                    Actif = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Ordre = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Periode", x => x.Id);
+                    table.PrimaryKey("PK_Periodes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TypeEvaluation",
+                name: "TypeEvaluations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Nom = table.Column<string>(type: "TEXT", nullable: false),
-                    Ordre = table.Column<int>(type: "INTEGER", nullable: true),
-                    Actif = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Ordre = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TypeEvaluation", x => x.Id);
+                    table.PrimaryKey("PK_TypeEvaluations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Inscription",
+                name: "Classes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Nom = table.Column<string>(type: "TEXT", nullable: false),
+                    EcoleId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Classes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Classes_Ecoles_EcoleId",
+                        column: x => x.EcoleId,
+                        principalTable: "Ecoles",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Inscriptions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -114,21 +132,21 @@ namespace Taratra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Inscription", x => x.Id);
+                    table.PrimaryKey("PK_Inscriptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Inscription_AnneeScolaire_AnneeScolaireId",
+                        name: "FK_Inscriptions_AnneeScolaires_AnneeScolaireId",
                         column: x => x.AnneeScolaireId,
-                        principalTable: "AnneeScolaire",
+                        principalTable: "AnneeScolaires",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Inscription_Classe_ClasseId",
+                        name: "FK_Inscriptions_Classes_ClasseId",
                         column: x => x.ClasseId,
-                        principalTable: "Classe",
+                        principalTable: "Classes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Inscription_Eleves_EleveId",
+                        name: "FK_Inscriptions_Eleves_EleveId",
                         column: x => x.EleveId,
                         principalTable: "Eleves",
                         principalColumn: "Id",
@@ -136,7 +154,7 @@ namespace Taratra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SystemeEvaluation",
+                name: "SystemeEvaluations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -148,29 +166,29 @@ namespace Taratra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SystemeEvaluation", x => x.Id);
+                    table.PrimaryKey("PK_SystemeEvaluations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SystemeEvaluation_Classe_ClasseId",
+                        name: "FK_SystemeEvaluations_Classes_ClasseId",
                         column: x => x.ClasseId,
-                        principalTable: "Classe",
+                        principalTable: "Classes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SystemeEvaluation_Matiere_MatiereId",
+                        name: "FK_SystemeEvaluations_Matieres_MatiereId",
                         column: x => x.MatiereId,
-                        principalTable: "Matiere",
+                        principalTable: "Matieres",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SystemeEvaluation_TypeEvaluation_TypeEvaluationId",
+                        name: "FK_SystemeEvaluations_TypeEvaluations_TypeEvaluationId",
                         column: x => x.TypeEvaluationId,
-                        principalTable: "TypeEvaluation",
+                        principalTable: "TypeEvaluations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Note",
+                name: "Notes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -183,81 +201,86 @@ namespace Taratra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Note", x => x.Id);
+                    table.PrimaryKey("PK_Notes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Note_AnneeScolaire_AnneeScolaireId",
+                        name: "FK_Notes_AnneeScolaires_AnneeScolaireId",
                         column: x => x.AnneeScolaireId,
-                        principalTable: "AnneeScolaire",
+                        principalTable: "AnneeScolaires",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Note_Eleves_EleveId",
+                        name: "FK_Notes_Eleves_EleveId",
                         column: x => x.EleveId,
                         principalTable: "Eleves",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Note_Periode_PeriodeId",
+                        name: "FK_Notes_Periodes_PeriodeId",
                         column: x => x.PeriodeId,
-                        principalTable: "Periode",
+                        principalTable: "Periodes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Note_SystemeEvaluation_SystemeEvaluationId",
+                        name: "FK_Notes_SystemeEvaluations_SystemeEvaluationId",
                         column: x => x.SystemeEvaluationId,
-                        principalTable: "SystemeEvaluation",
+                        principalTable: "SystemeEvaluations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Inscription_AnneeScolaireId",
-                table: "Inscription",
+                name: "IX_Classes_EcoleId",
+                table: "Classes",
+                column: "EcoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Inscriptions_AnneeScolaireId",
+                table: "Inscriptions",
                 column: "AnneeScolaireId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Inscription_ClasseId",
-                table: "Inscription",
+                name: "IX_Inscriptions_ClasseId",
+                table: "Inscriptions",
                 column: "ClasseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Inscription_EleveId",
-                table: "Inscription",
+                name: "IX_Inscriptions_EleveId",
+                table: "Inscriptions",
                 column: "EleveId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Note_AnneeScolaireId",
-                table: "Note",
+                name: "IX_Notes_AnneeScolaireId",
+                table: "Notes",
                 column: "AnneeScolaireId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Note_EleveId",
-                table: "Note",
+                name: "IX_Notes_EleveId",
+                table: "Notes",
                 column: "EleveId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Note_PeriodeId",
-                table: "Note",
+                name: "IX_Notes_PeriodeId",
+                table: "Notes",
                 column: "PeriodeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Note_SystemeEvaluationId",
-                table: "Note",
+                name: "IX_Notes_SystemeEvaluationId",
+                table: "Notes",
                 column: "SystemeEvaluationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SystemeEvaluation_ClasseId",
-                table: "SystemeEvaluation",
+                name: "IX_SystemeEvaluations_ClasseId",
+                table: "SystemeEvaluations",
                 column: "ClasseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SystemeEvaluation_MatiereId",
-                table: "SystemeEvaluation",
+                name: "IX_SystemeEvaluations_MatiereId",
+                table: "SystemeEvaluations",
                 column: "MatiereId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SystemeEvaluation_TypeEvaluationId",
-                table: "SystemeEvaluation",
+                name: "IX_SystemeEvaluations_TypeEvaluationId",
+                table: "SystemeEvaluations",
                 column: "TypeEvaluationId");
         }
 
@@ -265,31 +288,34 @@ namespace Taratra.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Inscription");
+                name: "Inscriptions");
 
             migrationBuilder.DropTable(
-                name: "Note");
+                name: "Notes");
 
             migrationBuilder.DropTable(
-                name: "AnneeScolaire");
+                name: "AnneeScolaires");
 
             migrationBuilder.DropTable(
                 name: "Eleves");
 
             migrationBuilder.DropTable(
-                name: "Periode");
+                name: "Periodes");
 
             migrationBuilder.DropTable(
-                name: "SystemeEvaluation");
+                name: "SystemeEvaluations");
 
             migrationBuilder.DropTable(
-                name: "Classe");
+                name: "Classes");
 
             migrationBuilder.DropTable(
-                name: "Matiere");
+                name: "Matieres");
 
             migrationBuilder.DropTable(
-                name: "TypeEvaluation");
+                name: "TypeEvaluations");
+
+            migrationBuilder.DropTable(
+                name: "Ecoles");
         }
     }
 }
